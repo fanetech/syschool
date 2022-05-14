@@ -20,6 +20,9 @@ security:
             custom_authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
+            json_login:
+                check_path: api_login    
+                
                 # where to redirect after logout
                 # target: app_any_route
 

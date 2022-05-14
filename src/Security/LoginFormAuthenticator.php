@@ -50,9 +50,23 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         $role = $token->getUser()->getRoles();
-        if (in_array("ROLE_PARENT", $role)) {
-            return new RedirectResponse($this->urlGenerator->generate('parent.dashboard'));
-        } else return new RedirectResponse($this->urlGenerator->generate('ecole.dashboard'));
+        //dd($role);
+        switch ($role[0]) {
+            case 'USER_PARENT':
+                return new RedirectResponse($this->urlGenerator->generate('parent.dashboard'));
+                break;
+            case 'USER_ECOLE':
+                return new RedirectResponse($this->urlGenerator->generate('ecole.dashboard'));
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        //if (in_array("ROLE_PARENT", $role)) {
+        //    return new RedirectResponse($this->urlGenerator->generate('parent.dashboard'));
+        //} else return new RedirectResponse($this->urlGenerator->generate('ecole.dashboard'));
 
         // For example:
         // return new RedirectResponse($this->urlGenerator->generate('some_route'));
