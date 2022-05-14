@@ -32,6 +32,7 @@ class ApiLoginController extends AbstractController
         }
 
         $token = "yes"; // somehow create an API token for $user
+        
 
         //dd($token);
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,6 +25,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string')]
     private $password;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $nom;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $prenom;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $telephone;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isParent;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: message::class)]
+    private $message;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Eleve::class)]
+    private $eleves;
+
+    #[ORM\Column(type: 'boolean')]
+    private $IsActif;
+
+    public function __construct()
+    {
+        $this->message = new ArrayCollection();
+        $this->eleves = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -92,5 +121,125 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(?string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getIsParent(): ?bool
+    {
+        return $this->isParent;
+    }
+
+    public function setIsParent(bool $isParent): self
+    {
+        $this->isParent = $isParent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, message>
+     */
+    public function getMessage(): Collection
+    {
+        return $this->message;
+    }
+
+    public function addMessage(message $message): self
+    {
+        if (!$this->message->contains($message)) {
+            $this->message[] = $message;
+            $message->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(message $message): self
+    {
+        if ($this->message->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Eleve>
+     */
+    public function getEleves(): Collection
+    {
+        return $this->eleves;
+    }
+
+    public function addElefe(Eleve $elefe): self
+    {
+        if (!$this->eleves->contains($elefe)) {
+            $this->eleves[] = $elefe;
+            $elefe->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeElefe(Eleve $elefe): self
+    {
+        if ($this->eleves->removeElement($elefe)) {
+            // set the owning side to null (unless already changed)
+            if ($elefe->getParent() === $this) {
+                $elefe->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIsActif(): ?bool
+    {
+        return $this->IsActif;
+    }
+
+    public function setIsActif(bool $IsActif): self
+    {
+        $this->IsActif = $IsActif;
+
+        return $this;
     }
 }
