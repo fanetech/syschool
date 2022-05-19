@@ -45,7 +45,7 @@
 			<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
 			<div class="navbar-nav">
 				<div class="nav-item text-nowrap">
-					<a class="nav-link px-3" href="#">Sign out</a>
+					<a class="nav-link px-3" href="{{ path('app_login') }}">Sign out</a>
 				</div>
 			</div>
 		</header>
@@ -62,19 +62,19 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">
+								<a class="nav-link" href=" {{ path('classe.show.all') }} ">
 									<span data-feather="file"></span>
 									Classes
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">
+								<a class="nav-link" href="{{ path('eleve.show.all') }}">
 									<span data-feather="shopping-cart"></span>
 									Élèves
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">
+								<a class="nav-link" href="{{ path('parent.show.all') }}">
 									<span data-feather="users"></span>
 									Parents
 								</a>

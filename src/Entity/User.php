@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity("email")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -38,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isParent;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: message::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Message::class)]
     private $message;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Eleve::class)]
@@ -179,7 +181,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->message;
     }
 
-    public function addMessage(message $message): self
+    public function addMessage(Message $message): self
     {
         if (!$this->message->contains($message)) {
             $this->message[] = $message;
@@ -189,7 +191,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeMessage(message $message): self
+    public function removeMessage(Message $message): self
     {
         if ($this->message->removeElement($message)) {
             // set the owning side to null (unless already changed)
@@ -241,5 +243,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->IsActif = $IsActif;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->email . ", " . $this->nom . ", " . $this->prenom;
     }
 }

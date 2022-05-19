@@ -1,0 +1,10 @@
+{% extends "base.ecole.html.twig" %}
+{% block body %}
+	{% block title_h1 %}
+		<h1>Edition d'un parent</h1>
+	{% endblock %}
+	<div class="col-12">
+		<a href="{{ path('parent.edit.password', {id:parent.id} ) }}" class="btn btn-primary">Modifier mot de passe</a>
+
+	</div>
+	{{form(form)}}{% endblock %}

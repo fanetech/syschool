@@ -17,6 +17,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
+
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
@@ -48,7 +49,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
         $role = $token->getUser()->getRoles();
         //dd($role);
         switch ($role[0]) {

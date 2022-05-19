@@ -22,9 +22,10 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class ApiLoginController extends AbstractController
 {
-    #[Route('/api/login', name: 'api_login')]
+    #[Route('/api/login', name: 'api_login_json')]
     public function index(#[CurrentUser] ?User $user): Response
     {
+        dd($user);
         if (null === $user) {
             return $this->json([
                 'message' => 'missing credentials',
@@ -32,7 +33,7 @@ class ApiLoginController extends AbstractController
         }
 
         $token = "yes"; // somehow create an API token for $user
-        
+
 
         //dd($token);
 

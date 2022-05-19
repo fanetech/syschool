@@ -1,0 +1,25 @@
+{% extends "base.ecole.html.twig" %}
+{% block body %}
+	<h1>Tous les classes</h1>
+	<div class="row">
+		<div class="col-12">
+			<a href="{{ path('classe.add') }}" class="btn btn-primary">ajouter</a>
+
+		</div>
+		<div class="row mt-2">
+			{% for classe in classes %}
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<h5 class="card-title">{{classe.nom}}</h5>
+						<a href=" {{path('classe.edit', {id:classe.id} )}} " class="btn btn-info">Modifier</a>
+						<a href=" {{path('classe.delete', {id:classe.id})}}" class="btn btn-danger" onclick="Return confirm('Voulez vous vraiment supprimé cette classe')">Supprimer</a>
+					</div>
+				</div>
+			{% endfor %}
+
+		</div>
+
+
+	</div>
+
+{% endblock %}

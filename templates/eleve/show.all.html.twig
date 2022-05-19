@@ -1,0 +1,30 @@
+{% extends "base.ecole.html.twig" %}
+{% block body %}
+	<h1>Tous les élèves</h1>
+	<div class="row">
+		<div class="col-12">
+			<a href="{{ path('eleve.add') }}" class="btn btn-primary">Créer</a>
+
+		</div>
+		<div class="row mt-2">
+			{% for eleve in eleves %}
+
+
+				<div class="card ml-2" style="width: 18rem;">
+					<img class="card-img-top" src="..." alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">
+							{{eleve.nom}}
+						</h5>
+						<h5 class="card-title">
+							{{eleve.prenom}}
+						</h5>
+						<a href="#" class="btn btn-primary">Voir</a>
+						<a href="#" class="btn btn-info">Editer</a>
+						<a href="#" class="btn btn-danger">supprimé</a>
+					</div>
+				</div>
+			{% endfor %}
+
+		</div>
+	{% endblock %}
